@@ -47,3 +47,11 @@ canvas {
   display: block; /* Prevents the bottom margin/padding issue */
 }
 
+/* Light mode styles when user prefers light mode */
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: #ffffff; /* Light background color */
+    color: #333333; /* Dark text color */
+  }
+}
+
