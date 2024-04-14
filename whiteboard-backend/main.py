@@ -39,7 +39,7 @@ def process_image():
                 "content": [
                     {
                         "type": "text",
-                        "text": "What’s in this image?"
+                        "text": "Think up of hints that can lead to the answer in this image. Compile a step-by-step list that leads to the answer but only give me a small part of it, around 2-4 steps. The steps of the small part should be substantial enough as to include what data structure or algorithm to use to solve the problem. Start your response with Hint: and no lists, just in sentences."
                     },
                     {
                         "type": "image_url",
