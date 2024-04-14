@@ -78,29 +78,23 @@ export default function WhiteboardCanvas() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const formData = new FormData();
         const fileInput = document.getElementById('fileInput');
+        if (fileInput.files.length === 0) {
+            alert('Please select a file to upload.');
+            return;
+        }
+        const formData = new FormData();
         formData.append('image', fileInput.files[0]);
-        axios.post('http://localhost:5000/process_image', {
-            body: formData
-        }).then(res=>{
-            console.log("Success")
-        })
-
-        // fetch('http://localhost:5000/process_image', {
-        //     method: 'POST',
-        //     mode: 'cors',
-        //     body: formData,
-
-        // })
-        // .then(response => response.json())
-        // .then(data => {
-        //     console.log('Success:', data);
-        //     setShowUploader(false); // Hide uploader after submission
-        // })
-        // .catch(error => {
-        //     console.error('Error:', error);
-        // });
+    
+        axios.post('http://localhost:5000/process_image', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(res => {
+            console.log("Success:", res.data);
+        }).catch(error => {
+            console.error("Error:", error.response ? error.response.data : "Network error");
+        });
     };
 
     const toggleUploader = () => {
