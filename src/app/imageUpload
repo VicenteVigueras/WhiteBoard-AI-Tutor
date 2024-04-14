@@ -1,0 +1,34 @@
+import React from 'react';
+
+function ImageUpload() {
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const formData = new FormData();
+        // Make sure your file input has the ID 'fileInput'
+        const fileInput = document.getElementById('fileInput');
+        formData.append('image', fileInput.files[0]);
+
+        fetch('http://localhost:5000/process_image', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+            // Handle success (e.g., show a message, display the response)
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Handle errors here (e.g., show an error message)
+        });
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <input type="file" id="fileInput" />
+            <button type="submit">Upload and Analyze Image</button>
+        </form>
+    );
+}
+
+export default ImageUpload;
