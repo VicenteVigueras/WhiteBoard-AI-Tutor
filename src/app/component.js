@@ -1,4 +1,5 @@
 'use client'
+import axios from 'axios';
 import React, { useRef, useEffect, useState } from 'react';
 
 export default function WhiteboardCanvas() {
@@ -8,9 +9,7 @@ export default function WhiteboardCanvas() {
     const [lineWidth, setLineWidth] = useState(3);
     const [drawingActions, setDrawingActions] = useState([]);
     const [currentPath, setCurrentPath] = useState([]);
-
-    const [showHintModal, setShowHintModal] = useState(false);
-
+    const [showUploader, setShowUploader] = useState(false); // State to show/hide the file input
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -35,7 +34,6 @@ export default function WhiteboardCanvas() {
         const newPath = [...currentPath, { x: offsetX, y: offsetY }];
         setCurrentPath(newPath);
 
-        // Draw the current path
         const ctx = canvasRef.current.getContext('2d');
         ctx.strokeStyle = currentColor;
         ctx.lineWidth = lineWidth;
@@ -77,11 +75,38 @@ export default function WhiteboardCanvas() {
             ctx.stroke();
         });
     };
-    
-    const showHint = () => {
-        setShowHintModal(true);
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const formData = new FormData();
+        const fileInput = document.getElementById('fileInput');
+        formData.append('image', fileInput.files[0]);
+        axios.post('http://localhost:5000/process_image', {
+            body: formData
+        }).then(res=>{
+            console.log("Success")
+        })
+
+        // fetch('http://localhost:5000/process_image', {
+        //     method: 'POST',
+        //     mode: 'cors',
+        //     body: formData,
+
+        // })
+        // .then(response => response.json())
+        // .then(data => {
+        //     console.log('Success:', data);
+        //     setShowUploader(false); // Hide uploader after submission
+        // })
+        // .catch(error => {
+        //     console.error('Error:', error);
+        // });
     };
-    
+
+    const toggleUploader = () => {
+        setShowUploader(!showUploader); // Toggle uploader visibility
+    };
+
     return (
         <div className="whiteboard-container">
             <canvas
@@ -97,17 +122,14 @@ export default function WhiteboardCanvas() {
                 <input type="range" min="1" max="10" value={lineWidth} onChange={e => setLineWidth(e.target.value)} />
                 <button onClick={undoDrawing}>Undo</button>
                 <button onClick={clearDrawing}>Clear</button>
-                <button onClick={showHint} style={{color: 'gold',fontWeight: "bold" }}>Hint</button>
-                
+                <button onClick={toggleUploader}>Get Hint</button>
             </div>
-            <div className={`hint-modal ${showHintModal ? 'show' : ''}`} style={{ display: showHintModal ? 'block' : 'none' }}>
-                <div className="hint-modal-content" style={{ backgroundColor: '#fefefe', margin: '15% auto', padding: '20px', border: '1px solid #888', width: '80%', maxWidth: '400px', borderRadius: '5px', position: 'relative' }}>
-                    <span className="close-hint-modal" style={{ color: '#aaa', float: 'right', fontSize: '28px', fontWeight: 'bold' }} onClick={() => setShowHintModal(false)}>&times;</span>
-                    <p>Here's a hint about drawing...</p>
-                    {/* Add your hint text or content here */}
-                </div>
-            </div>
+            {showUploader && (
+                <form onSubmit={handleSubmit}>
+                    <input type="file" id="fileInput" />
+                    <button type="submit">Upload and Analyze Image</button>
+                </form>
+            )}
         </div>
-        
     );
 }
