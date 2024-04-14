@@ -3,6 +3,7 @@
 ## What It Does
 
 A notebook w/ whitebook centered around LeetCode style coding questions where a fine tuned OpenAI tutor helps students (in teams) work through problems.
+A notebook w/ whitebook centered around LeetCode style coding questions where a fine tuned OpenAI tutor helps students (in teams) work through problems.
 
 ## How To Run
 
