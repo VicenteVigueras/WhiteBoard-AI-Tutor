@@ -9,6 +9,9 @@ export default function WhiteboardCanvas() {
     const [drawingActions, setDrawingActions] = useState([]);
     const [currentPath, setCurrentPath] = useState([]);
 
+    const [showHintModal, setShowHintModal] = useState(false);
+
+
     useEffect(() => {
         const canvas = canvasRef.current;
         canvas.width = 900;
@@ -74,7 +77,11 @@ export default function WhiteboardCanvas() {
             ctx.stroke();
         });
     };
-
+    
+    const showHint = () => {
+        setShowHintModal(true);
+    };
+    
     return (
         <div className="whiteboard-container">
             <canvas
@@ -90,7 +97,17 @@ export default function WhiteboardCanvas() {
                 <input type="range" min="1" max="10" value={lineWidth} onChange={e => setLineWidth(e.target.value)} />
                 <button onClick={undoDrawing}>Undo</button>
                 <button onClick={clearDrawing}>Clear</button>
+                <button onClick={showHint}>Hint</button>
+                
+            </div>
+            <div className={`hint-modal ${showHintModal ? 'show' : ''}`} style={{ display: showHintModal ? 'block' : 'none' }}>
+                <div className="hint-modal-content" style={{ backgroundColor: '#fefefe', margin: '15% auto', padding: '20px', border: '1px solid #888', width: '80%', maxWidth: '400px', borderRadius: '5px', position: 'relative' }}>
+                    <span className="close-hint-modal" style={{ color: '#aaa', float: 'right', fontSize: '28px', fontWeight: 'bold' }} onClick={() => setShowHintModal(false)}>&times;</span>
+                    <p>Here's a hint about drawing...</p>
+                    {/* Add your hint text or content here */}
+                </div>
             </div>
         </div>
+        
     );
 }
