@@ -1,4 +1,3 @@
-'use client'
 import axios from 'axios';
 import React, { useRef, useEffect, useState } from 'react';
 
@@ -10,6 +9,7 @@ export default function WhiteboardCanvas() {
     const [drawingActions, setDrawingActions] = useState([]);
     const [currentPath, setCurrentPath] = useState([]);
     const [showUploader, setShowUploader] = useState(false); // State to show/hide the file input
+    const [serverResponse, setServerResponse] = useState(""); // State to store the server response
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -92,8 +92,10 @@ export default function WhiteboardCanvas() {
             }
         }).then(res => {
             console.log("Success:", res.data);
+            setServerResponse(JSON.stringify(res.data)); // Update the state with the server response
         }).catch(error => {
             console.error("Error:", error.response ? error.response.data : "Network error");
+            setServerResponse("Failed to process image");
         });
     };
 
@@ -123,6 +125,9 @@ export default function WhiteboardCanvas() {
                     <input type="file" id="fileInput" />
                     <button type="submit">Upload and Analyze Image</button>
                 </form>
+            )}
+            {serverResponse && (
+                <p>{serverResponse}</p>
             )}
         </div>
     );

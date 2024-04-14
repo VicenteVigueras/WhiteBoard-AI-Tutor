@@ -8,7 +8,7 @@ export default function Home() {
      console.log("Calling Backend");
      fetch("http://127.0.0.1:5000/process_image")
      .then((response) => response.json())
-     .then((data) => console.log(data.success))
+     .then((data) => console.log(data))
   }
 
   return (
