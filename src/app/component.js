@@ -97,7 +97,7 @@ export default function WhiteboardCanvas() {
                 <input type="range" min="1" max="10" value={lineWidth} onChange={e => setLineWidth(e.target.value)} />
                 <button onClick={undoDrawing}>Undo</button>
                 <button onClick={clearDrawing}>Clear</button>
-                <button onClick={showHint}>Hint</button>
+                <button onClick={showHint} style={{color: 'gold',fontWeight: "bold" }}>Hint</button>
                 
             </div>
             <div className={`hint-modal ${showHintModal ? 'show' : ''}`} style={{ display: showHintModal ? 'block' : 'none' }}>
