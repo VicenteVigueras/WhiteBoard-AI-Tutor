@@ -9,12 +9,11 @@ app = Flask(__name__)
 CORS(app, resources={r"/process_image": {"origins": "*"}}, supports_credentials=True)
 
 # OpenAI API Key
-api_key = "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"
+api_key = "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"
 
-
-@app.route("/api_check")
-def api_check():
-    return jsonify({"success": "API Running"})
+#@app.route("/api_check")
+#def api_check():
+#   return jsonify({"success": "API Running"})
 
 @app.route('/process_image', methods=['POST', 'OPTIONS'])
 @cross_origin() # This decorator can be used to allow (on a per route basis) CORS
@@ -62,7 +61,7 @@ def process_image():
         # Extracting just the content part of the response
         try:
             content = response_data['choices'][0]['message']['content']
-            print(content)
+            #print(content)
             return jsonify({'content': content})
         except KeyError as e:
             return jsonify({'error': 'Failed to extract content', 'details': str(e)}), 500
