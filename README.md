@@ -1,4 +1,4 @@
-# WhiteBoard-App
+# WhiteBoard AI Tutor
 
 ## What It Does
 
