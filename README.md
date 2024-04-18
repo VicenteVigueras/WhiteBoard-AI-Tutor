@@ -3,8 +3,10 @@
 ## What It Does
 
 A notebook w/ whitebook centered around LeetCode style coding questions where a fine tuned OpenAI tutor helps students (in teams) work through problems.
-A notebook w/ whitebook centered around LeetCode style coding questions where a fine tuned OpenAI tutor helps students (in teams) work through problems.
 
+This application runs with an API Key that has been disabled, but feel free to download it and play around.
+
+For additional information, check out the dev post: https://devpost.com/software/whiteboardapp
 ## How To Run
 
 download requirements: `npm i`
