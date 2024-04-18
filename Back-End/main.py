@@ -9,7 +9,7 @@ app = Flask(__name__)
 CORS(app, resources={r"/process_image": {"origins": "*"}}, supports_credentials=True)
 
 # OpenAI API Key
-api_key = "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"
+api_key = "include your API Key"
 
 #@app.route("/api_check")
 #def api_check():
